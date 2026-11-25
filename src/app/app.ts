@@ -120,9 +120,6 @@ export class App {
   cerrarModal(): void {
     this.modalVisible.set(false);
     this.gratitudVisible.set(true);
-    this.confetiVisible.set(true);
-    clearTimeout(this.temporizador);
-    this.temporizador = setTimeout(() => this.confetiVisible.set(false), 2600);
   }
 
   reiniciar(): void {
@@ -139,5 +136,8 @@ export class App {
   private mostrarFinal(): void {
     this.modalVisible.set(true);
     this.gratitudVisible.set(false);
+    this.confetiVisible.set(true);
+    clearTimeout(this.temporizador);
+    this.temporizador = setTimeout(() => this.confetiVisible.set(false), 3000);
   }
 }

@@ -54,4 +54,25 @@ describe('App', () => {
     expect(app.pasajeVisible()).toBe(false);
     expect(app.pasaje()).toBe(VERSICULOS[8]);
   });
+
+  it('muestra el confite al abrir el modal final y lo apaga a los tres segundos', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    const app = fixture.componentInstance;
+
+    app.cerrarModal();
+    expect(app.confetiVisible()).toBe(false);
+
+    app.alCompletar();
+    await fixture.whenStable();
+    expect(app.modalVisible()).toBe(true);
+    expect(app.confetiVisible()).toBe(true);
+
+    await new Promise((resolve) => setTimeout(resolve, 3100));
+    expect(app.confetiVisible()).toBe(false);
+
+    app.cerrarModal();
+    expect(app.gratitudVisible()).toBe(true);
+    expect(app.confetiVisible()).toBe(false);
+  });
 });
