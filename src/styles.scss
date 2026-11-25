@@ -62,17 +62,40 @@
   --confeti-4: #34d399;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html,
-body {
-  min-height: 100%;
+body,
+app-root {
+  width: 100%;
+  height: 100dvh;
   margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 body {
   background: var(--fondo);
   color: var(--texto);
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
   -webkit-tap-highlight-color: transparent;
+}
+
+body.ant-scrolling-effect {
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+.ruleta__resultado .ant-card-body {
+  padding: clamp(0.4rem, 1.4dvh, 0.75rem);
 }
 
 button {
@@ -87,4 +110,87 @@ button {
 :root[data-theme='oscuro'] .ant-modal-body,
 :root[data-theme='oscuro'] .ant-modal-close {
   color: var(--texto);
+}
+
+.ant-modal-wrap.pasaje-wrap {
+  overflow: hidden !important;
+}
+
+.pasaje-modal {
+  top: 5dvh !important;
+  margin: 0 auto !important;
+}
+
+.pasaje-modal .ant-modal-content {
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  height: 90dvh;
+  max-width: 80vw;
+  max-height: 90dvh;
+  padding: clamp(0.9rem, 3dvh, 2rem);
+  overflow: hidden;
+}
+
+.pasaje-modal .ant-modal-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.pasaje {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.45rem, 1.8dvh, 1rem);
+  width: 100%;
+  min-height: 0;
+  text-align: center;
+}
+
+.pasaje__rotulo {
+  margin: 0;
+  color: var(--texto-suave);
+  font-size: clamp(0.7rem, 2.2dvh, 0.9rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pasaje__referencia {
+  margin: 0;
+  color: var(--primario);
+  font-size: clamp(1.1rem, 4.6dvh, 2rem);
+  line-height: 1.15;
+}
+
+.pasaje__texto {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(0.2rem, 0.8dvh, 0.5rem);
+  min-height: 0;
+  overflow: hidden;
+  color: var(--texto);
+}
+
+.pasaje__texto p {
+  margin: 0;
+  font-size: clamp(0.82rem, 3.1dvh, 1.25rem);
+  line-height: 1.32;
+}
+
+.pasaje__pie {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.35rem, 1.2dvh, 0.7rem);
+}
+
+.pasaje__credito {
+  margin: 0;
+  color: var(--texto-suave);
+  font-size: clamp(0.55rem, 1.7dvh, 0.72rem);
+  line-height: 1.25;
 }

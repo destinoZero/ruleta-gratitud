@@ -1,15 +1,32 @@
 .ruleta {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(0.6rem, 1.6dvh, 1rem);
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: clamp(0.35rem, 1.2dvh, 0.7rem);
   width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.ruleta__zona {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  container-type: size;
 }
 
 .ruleta__marco {
   position: relative;
-  width: min(94vw, 58dvh, 520px);
+  width: min(94vw, 52dvh, 520px);
+  max-width: 100%;
+  max-height: 100%;
   aspect-ratio: 1;
+}
+
+@supports (width: 1cqh) {
+  .ruleta__marco {
+    width: min(94cqw, 94cqh, 520px);
+  }
 }
 
 .ruleta__puntero {
@@ -24,6 +41,13 @@
   border-right: 13px solid transparent;
   border-top: 24px solid var(--primario);
   filter: drop-shadow(0 2px 3px rgb(0 0 0 / 25%));
+}
+
+.ruleta__recorte {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .ruleta__disco {
@@ -92,28 +116,44 @@
   letter-spacing: 1px;
 }
 
+.ruleta__panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(0.35rem, 1.1dvh, 0.7rem);
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
 .ruleta__progreso {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  width: min(94vw, 520px);
-  font-size: 0.85rem;
+  width: 100%;
+  font-size: clamp(0.7rem, 2.2dvh, 0.85rem);
   font-weight: 700;
 }
 
 .ruleta__progreso nz-progress {
   flex: 1;
+  min-width: 0;
 }
 
 .ruleta__controles {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
+}
+
+.ruleta__controles button {
+  font-size: clamp(0.75rem, 2.4dvh, 0.9rem);
 }
 
 .ruleta__resultado {
-  width: min(94vw, 520px);
+  width: 100%;
 }
 
 .resultado {
@@ -122,6 +162,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  min-width: 0;
 }
 
 .resultado__rotulo {
@@ -139,21 +180,51 @@
 }
 
 .ruleta__historial {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(4.8rem, 20cqw, 6.5rem), 1fr));
+  gap: clamp(0.15rem, 0.6dvh, 0.35rem);
+  width: 100%;
+  overflow: hidden;
+}
+
+.ruleta__historial nz-tag {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
-  gap: 0.35rem;
-  width: min(94vw, 520px);
+  height: auto;
+  min-width: 0;
+  margin: 0;
+  padding-inline: 0.25rem;
+  overflow: hidden;
+  font-size: clamp(0.55rem, 1.8dvh, 0.72rem);
+  line-height: 1.15;
+  white-space: nowrap;
 }
 
 @media (orientation: landscape) {
-  .ruleta__marco {
-    width: min(46vw, 78dvh, 360px);
+  .ruleta {
+    grid-template-columns: minmax(0, 44%) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    gap: clamp(0.6rem, 2vw, 1.2rem);
+    align-items: center;
   }
 
-  .ruleta__progreso,
-  .ruleta__resultado,
+  .ruleta__zona,
+  .ruleta__panel {
+    height: 100%;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 520px) {
+  .resultado {
+    flex-wrap: nowrap;
+  }
+
+  .resultado__titulo {
+    font-size: clamp(0.95rem, 3.4dvh, 1.25rem);
+  }
+
   .ruleta__historial {
-    width: min(70vw, 520px);
+    grid-template-columns: repeat(auto-fit, minmax(clamp(4.2rem, 18cqw, 5.5rem), 1fr));
   }
 }

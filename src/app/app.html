@@ -5,7 +5,13 @@
       <p class="app__subtitulo">12 pasajes para dar gracias</p>
     </div>
     <div class="app__acciones">
-      <button nz-button nzType="text" title="Cambiar tema" (click)="cambiarTema()">
+      <button
+        nz-button
+        nzType="text"
+        class="app__tema"
+        title="Cambiar tema"
+        (click)="cambiarTema()"
+      >
         <nz-icon nzType="bg-colors" />
         {{ etiquetaTema() }}
       </button>
@@ -30,6 +36,31 @@
   @if (confetiVisible()) {
     <app-confeti />
   }
+
+  <nz-modal
+    [nzVisible]="pasajeVisible()"
+    [nzFooter]="null"
+    nzWidth="80vw"
+    nzWrapClassName="pasaje-wrap"
+    nzClassName="pasaje-modal"
+    (nzOnCancel)="cerrarPasaje()"
+  >
+    <ng-container *nzModalContent>
+      <div class="pasaje">
+        <p class="pasaje__rotulo">Palabra de Dios</p>
+        <h2 class="pasaje__referencia">{{ pasaje()?.referencia }}</h2>
+        <div class="pasaje__texto">
+          @for (linea of lineasPasaje(); track $index) {
+            <p>{{ linea }}</p>
+          }
+        </div>
+        <div class="pasaje__pie">
+          <p class="pasaje__credito">{{ atribucionRv60 }}</p>
+          <button nz-button nzType="primary" (click)="cerrarPasaje()">Cerrar</button>
+        </div>
+      </div>
+    </ng-container>
+  </nz-modal>
 
   <nz-modal
     [nzVisible]="modalVisible()"

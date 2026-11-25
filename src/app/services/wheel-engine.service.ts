@@ -12,6 +12,8 @@ export const MAX_DURACION_GIRO = 5000;
 export const DURACION_SNAP = 380;
 export const DURACION_SALTO = 300;
 
+export type DireccionGiro = 1 | -1;
+
 export function mod(valor: number, modulo: number): number {
   return ((valor % modulo) + modulo) % modulo;
 }
@@ -24,9 +26,13 @@ export function indiceEn(rotacion: number): number {
   return mod(Math.floor((-rotacion + ANGULO_SEGMENTO / 2) / ANGULO_SEGMENTO), TOTAL_SEGMENTOS);
 }
 
-export function siguienteLibre(desde: number, usados: readonly number[]): number {
+export function siguienteLibre(
+  desde: number,
+  usados: readonly number[],
+  direccion: DireccionGiro = 1,
+): number {
   for (let paso = 1; paso <= TOTAL_SEGMENTOS; paso++) {
-    const indice = mod(desde + paso, TOTAL_SEGMENTOS);
+    const indice = mod(desde + direccion * paso, TOTAL_SEGMENTOS);
     if (!usados.includes(indice)) return indice;
   }
   return desde;
@@ -55,6 +61,7 @@ export class WheelEngine {
   );
 
   private velocidad = 0;
+  private direccion: DireccionGiro = 1;
   private ultimoAngulo = 0;
   private ultimoTiempo = 0;
   private ultimoMovimiento = 0;
@@ -69,6 +76,7 @@ export class WheelEngine {
   reiniciar(): void {
     this.cancelarFrame();
     this.velocidad = 0;
+    this.direccion = 1;
     this.rotacion.set(0);
     this.dibujados.set([]);
     this.resultado.set(null);
@@ -94,7 +102,7 @@ export class WheelEngine {
     const dt = Math.max(tiempo - this.ultimoTiempo, 1);
     const delta = diferenciaCorta(this.ultimoAngulo, angulo);
     if (Math.abs(delta) < 0.01) return;
-    this.rotacion.update(valor => valor + delta);
+    this.rotacion.update((valor) => valor + delta);
     const instantanea = Math.max(-VELOCIDAD_MAX, Math.min(VELOCIDAD_MAX, delta / dt));
     this.velocidad = this.velocidad * 0.6 + instantanea * 0.4;
     this.ultimoAngulo = angulo;
@@ -107,22 +115,24 @@ export class WheelEngine {
     if (this.fase() !== 'dragging') return;
     if (tiempo - this.ultimoMovimiento > 120) this.velocidad = 0;
     if (Math.abs(this.velocidad) < 0.04) {
+      this.direccion = this.velocidad >= 0 ? 1 : -1;
       this.snap();
       return;
     }
-    this.giros.update(valor => valor + 1);
+    this.giros.update((valor) => valor + 1);
     this.iniciarGiro();
   }
 
   girar(): void {
     if (this.fase() !== 'idle') return;
     this.feedback.activar();
-    this.velocidad = -(0.9 + Math.random() * 0.6);
-    this.giros.update(valor => valor + 1);
+    this.velocidad = 0.9 + Math.random() * 0.6;
+    this.giros.update((valor) => valor + 1);
     this.iniciarGiro();
   }
 
   private iniciarGiro(): void {
+    this.direccion = this.velocidad >= 0 ? 1 : -1;
     this.fase.set('spinning');
     this.ultimoTiempo = performance.now();
     let acumulado = 0;
@@ -136,7 +146,7 @@ export class WheelEngine {
 
       if (this.velocidad === 0 || dt >= restante || acumulado >= MAX_DURACION_GIRO) {
         const distancia = (signo * this.velocidad * this.velocidad) / (2 * FRICCION);
-        this.rotacion.update(valor => valor + distancia);
+        this.rotacion.update((valor) => valor + distancia);
         this.velocidad = 0;
         this.actualizarCruce();
         this.snap();
@@ -144,7 +154,7 @@ export class WheelEngine {
       }
 
       const avance = signo * (Math.abs(this.velocidad) * dt - 0.5 * FRICCION * dt * dt);
-      this.rotacion.update(valor => valor + avance);
+      this.rotacion.update((valor) => valor + avance);
       this.velocidad -= signo * FRICCION * dt;
       this.actualizarCruce();
       this.frame = requestAnimationFrame(paso);
@@ -184,8 +194,8 @@ export class WheelEngine {
       return;
     }
 
-    const libre = siguienteLibre(indice, usados);
-    const pasos = mod(libre - indice, TOTAL_SEGMENTOS);
+    const libre = siguienteLibre(indice, usados, this.direccion);
+    const pasos = mod((libre - indice) * this.direccion, TOTAL_SEGMENTOS);
     if (pasos === 0) {
       this.registrar(indice);
       return;
@@ -194,13 +204,14 @@ export class WheelEngine {
     this.fase.set('skipping');
     this.feedback.salto();
     const inicio = this.rotacion();
-    const destino = inicio - pasos * ANGULO_SEGMENTO;
+    const destino = inicio + this.direccion * pasos * ANGULO_SEGMENTO;
     const duracion = Math.min(900, DURACION_SALTO * pasos);
     const comienzo = performance.now();
 
     const paso = (ahora: number): void => {
       const progreso = Math.min((ahora - comienzo) / duracion, 1);
-      const suave = progreso < 0.5 ? 2 * progreso * progreso : 1 - Math.pow(-2 * progreso + 2, 2) / 2;
+      const suave =
+        progreso < 0.5 ? 2 * progreso * progreso : 1 - Math.pow(-2 * progreso + 2, 2) / 2;
       this.rotacion.set(inicio + (destino - inicio) * suave);
       this.actualizarCruce();
       if (progreso < 1) {
@@ -215,7 +226,7 @@ export class WheelEngine {
   }
 
   private registrar(indice: number): void {
-    this.dibujados.update(lista => (lista.includes(indice) ? lista : [...lista, indice]));
+    this.dibujados.update((lista) => (lista.includes(indice) ? lista : [...lista, indice]));
     this.resultado.set(VERSICULOS[indice]);
     this.ultimoIndice = indice;
     this.fase.set(this.dibujados().length === TOTAL_SEGMENTOS ? 'done' : 'idle');

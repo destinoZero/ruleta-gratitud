@@ -16,6 +16,8 @@ describe('Ruleta', () => {
     const sectores = fixture.nativeElement.querySelectorAll('.ruleta__segmento');
     expect(sectores).toHaveLength(12);
     expect(fixture.nativeElement.querySelector('.ruleta__disco')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.ruleta__zona')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.ruleta__panel')).toBeTruthy();
   });
 
   it('construye la ruta de un sector y parte su etiqueta', async () => {

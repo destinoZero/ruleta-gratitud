@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { RV60_ATRIBUCION, VERSICULOS } from '../data/versiculos';
 import { FeedbackService } from './feedback.service';
 import { PaletteService } from './palette.service';
 import {
@@ -13,9 +14,9 @@ import {
 describe('WheelEngine', () => {
   beforeEach(() => {
     jest.useFakeTimers();
-    jest.spyOn(PaletteService.prototype, 'generar').mockReturnValue(
-      Array.from({ length: 12 }, (_, indice) => `hsl(${indice * 30} 70% 85%)`),
-    );
+    jest
+      .spyOn(PaletteService.prototype, 'generar')
+      .mockReturnValue(Array.from({ length: 12 }, (_, indice) => `hsl(${indice * 30} 70% 85%)`));
     TestBed.configureTestingModule({ providers: [WheelEngine, PaletteService, FeedbackService] });
   });
 
@@ -35,9 +36,35 @@ describe('WheelEngine', () => {
     expect(diferenciaCorta(10, 350)).toBe(-20);
   });
 
-  it('busca hacia la derecha el primer sector libre', () => {
+  it('busca el primer sector libre en la dirección indicada', () => {
     expect(siguienteLibre(0, [0, 1, 2])).toBe(3);
     expect(siguienteLibre(11, [0, 11])).toBe(1);
+    expect(siguienteLibre(0, [0, 11, 10], -1)).toBe(9);
+    expect(siguienteLibre(11, [0, 11], -1)).toBe(10);
+  });
+
+  it('gira hacia la derecha con el botón y respeta el sentido del arrastre', () => {
+    const engine = TestBed.inject(WheelEngine);
+
+    engine.girar();
+    jest.advanceTimersByTime(100);
+    expect(engine.rotacion()).toBeGreaterThan(0);
+
+    engine.reiniciar();
+    engine.iniciarArrastre(0, 0);
+    engine.moverArrastre(30, 100);
+    expect(engine.rotacion()).toBe(30);
+
+    engine.reiniciar();
+    engine.iniciarArrastre(0, 0);
+    engine.moverArrastre(-30, 100);
+    expect(engine.rotacion()).toBe(-30);
+  });
+
+  it('incluye el texto RV60 y la atribución en los doce pasajes', () => {
+    expect(VERSICULOS).toHaveLength(12);
+    expect(VERSICULOS.every((versiculo) => versiculo.textoRv60.trim().length > 20)).toBe(true);
+    expect(RV60_ATRIBUCION).toContain('Reina-Valera 1960');
   });
 
   it('detiene un empujón máximo a los 5 segundos', () => {

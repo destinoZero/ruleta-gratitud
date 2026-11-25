@@ -1,88 +1,89 @@
 <section class="ruleta" aria-label="Ruleta de gratitud">
-  <div class="ruleta__marco">
-    <div class="ruleta__puntero" aria-hidden="true"></div>
-    <div
-      class="ruleta__disco"
-      [class.ruleta__disco--bloqueado]="bloqueada()"
-      [style.transform]="'rotate(' + engine.rotacion() + 'deg)'"
-      (pointerdown)="alPointerDown($event)"
-      (pointermove)="alPointerMove($event)"
-      (pointerup)="alPointerUp($event)"
-      (pointercancel)="alPointerUp($event)"
-    >
-      <svg viewBox="0 0 400 400" aria-hidden="true">
-        @for (segmento of engine.segmentos(); track segmento.indice) {
-          <path
-            [attr.d]="rutaSegmento(segmento.indice)"
-            [attr.fill]="segmento.color"
-            [attr.opacity]="segmento.usado ? 0.42 : 1"
-            class="ruleta__segmento"
-            [class.ruleta__segmento--usado]="segmento.usado"
-          ></path>
-          <g [attr.transform]="transformacionEtiqueta(segmento.indice)">
-            <g [attr.transform]="voltearEtiqueta(segmento.indice)">
-              <text class="ruleta__etiqueta" x="200" y="70" text-anchor="middle">
-                <tspan x="200">{{ partes(segmento.etiqueta)[0] }}</tspan>
-                <tspan x="200" dy="15">{{ partes(segmento.etiqueta)[1] }}</tspan>
-              </text>
-            </g>
-            @if (segmento.usado) {
-              <circle class="ruleta__check" cx="200" cy="52" r="10"></circle>
-              <path class="ruleta__check-marca" d="M195 52 l4 4 l7 -8"></path>
+  <div class="ruleta__zona">
+    <div class="ruleta__marco">
+      <div class="ruleta__puntero" aria-hidden="true"></div>
+      <div class="ruleta__recorte">
+        <div
+          class="ruleta__disco"
+          [class.ruleta__disco--bloqueado]="bloqueada()"
+          [style.transform]="'rotate(' + engine.rotacion() + 'deg)'"
+          (pointerdown)="alPointerDown($event)"
+          (pointermove)="alPointerMove($event)"
+          (pointerup)="alPointerUp($event)"
+          (pointercancel)="alPointerUp($event)"
+        >
+          <svg viewBox="0 0 400 400" aria-hidden="true">
+            @for (segmento of engine.segmentos(); track segmento.indice) {
+              <path
+                [attr.d]="rutaSegmento(segmento.indice)"
+                [attr.fill]="segmento.color"
+                [attr.opacity]="segmento.usado ? 0.42 : 1"
+                class="ruleta__segmento"
+                [class.ruleta__segmento--usado]="segmento.usado"
+              ></path>
+              <g [attr.transform]="transformacionEtiqueta(segmento.indice)">
+                <g [attr.transform]="voltearEtiqueta(segmento.indice)">
+                  <text class="ruleta__etiqueta" x="200" y="70" text-anchor="middle">
+                    <tspan x="200">{{ partes(segmento.etiqueta)[0] }}</tspan>
+                    <tspan x="200" dy="15">{{ partes(segmento.etiqueta)[1] }}</tspan>
+                  </text>
+                </g>
+                @if (segmento.usado) {
+                  <circle class="ruleta__check" cx="200" cy="52" r="10"></circle>
+                  <path class="ruleta__check-marca" d="M195 52 l4 4 l7 -8"></path>
+                }
+              </g>
             }
-          </g>
-        }
-        <circle class="ruleta__centro" cx="200" cy="200" r="25"></circle>
-        <text class="ruleta__centro-texto" x="200" y="206" text-anchor="middle">GR</text>
-      </svg>
+            <circle class="ruleta__centro" cx="200" cy="200" r="25"></circle>
+            <text class="ruleta__centro-texto" x="200" y="206" text-anchor="middle">GR</text>
+          </svg>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="ruleta__progreso">
-    <nz-progress [nzPercent]="porcentaje()" [nzShowInfo]="false" nzSize="small"></nz-progress>
-    <span>{{ engine.dibujados().length }} / 12</span>
-  </div>
+  <div class="ruleta__panel">
+    <div class="ruleta__progreso">
+      <nz-progress [nzPercent]="porcentaje()" [nzShowInfo]="false" nzSize="small"></nz-progress>
+      <span>{{ engine.dibujados().length }} / 12</span>
+    </div>
 
-  <div class="ruleta__controles">
-    <button nz-button nzType="primary" [disabled]="bloqueada()" (click)="engine.girar()">
-      <nz-icon nzType="reload" />
-      Girar
-    </button>
-    <button nz-button (click)="reiniciar()">
-      <nz-icon nzType="redo" />
-      Reiniciar
-    </button>
-    <button
-      nz-button
-      nzType="text"
-      title="Activar o silenciar sonido"
-      (click)="alternarSonido()"
-    >
-      <nz-icon [nzType]="feedback.silenciado() ? 'audio-muted' : 'audio'" />
-    </button>
-  </div>
+    <div class="ruleta__controles">
+      <button nz-button nzType="primary" [disabled]="bloqueada()" (click)="engine.girar()">
+        <nz-icon nzType="reload" />
+        Girar
+      </button>
+      <button nz-button (click)="reiniciar()">
+        <nz-icon nzType="redo" />
+        Reiniciar
+      </button>
+      <button nz-button nzType="text" title="Activar o silenciar sonido" (click)="alternarSonido()">
+        <nz-icon [nzType]="feedback.silenciado() ? 'audio-muted' : 'audio'" />
+      </button>
+    </div>
 
-  @if (engine.resultado(); as versiculo) {
-    <nz-card class="ruleta__resultado" nzSize="small">
-      <div class="resultado">
-        <div>
-          <p class="resultado__rotulo">Tu pasaje</p>
-          <h2 class="resultado__titulo">{{ versiculo.referencia }}</h2>
+    @if (engine.resultado(); as versiculo) {
+      <nz-card class="ruleta__resultado" nzSize="small">
+        <div class="resultado">
+          <div>
+            <p class="resultado__rotulo">Tu pasaje</p>
+            <h2 class="resultado__titulo">{{ versiculo.referencia }}</h2>
+          </div>
+          <button nz-button nzType="default" (click)="compartir()">
+            <nz-icon nzType="share-alt" />
+            Compartir
+          </button>
         </div>
-        <button nz-button nzType="default" (click)="compartir()">
-          <nz-icon nzType="share-alt" />
-          Compartir
-        </button>
-      </div>
-    </nz-card>
-  }
-
-  <div class="ruleta__historial">
-    @for (indice of engine.dibujados(); track indice) {
-      <nz-tag nzColor="success">
-        <nz-icon nzType="check" />
-        {{ referenciaDe(indice) }}
-      </nz-tag>
+      </nz-card>
     }
+
+    <div class="ruleta__historial">
+      @for (indice of engine.dibujados(); track indice) {
+        <nz-tag nzColor="success">
+          <nz-icon nzType="check" />
+          {{ referenciaDe(indice) }}
+        </nz-tag>
+      }
+    </div>
   </div>
 </section>
