@@ -18,8 +18,9 @@ describe('Ruleta', () => {
     expect(fixture.nativeElement.querySelector('.ruleta__disco')).toBeTruthy();
     expect(fixture.nativeElement.querySelector('.ruleta__zona')).toBeTruthy();
     expect(fixture.nativeElement.querySelector('.ruleta__panel')).toBeTruthy();
-    expect(fixture.nativeElement.querySelector('.ruleta__corazon')).toBeTruthy();
-    expect(fixture.nativeElement.querySelector('.ruleta__centro-texto')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.ruleta__biblia')).toBeTruthy();
+    expect(fixture.nativeElement.querySelectorAll('.ruleta__biblia-pagina')).toHaveLength(2);
+    expect(fixture.nativeElement.querySelector('.ruleta__corazon')).toBeNull();
     expect(fixture.nativeElement.textContent).not.toContain('GR');
   });
 

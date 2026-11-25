@@ -109,8 +109,26 @@
   stroke-width: 3;
 }
 
-.ruleta__corazon {
-  fill: #ef4444;
+.ruleta__biblia-pagina {
+  fill: #fff7ed;
+  stroke: #9a3412;
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+}
+
+.ruleta__biblia-linea {
+  fill: none;
+  stroke: #9a3412;
+  stroke-width: 1;
+  stroke-linecap: round;
+  opacity: 0.65;
+}
+
+.ruleta__biblia-lomo {
+  fill: none;
+  stroke: #7c2d12;
+  stroke-width: 1.6;
+  stroke-linecap: round;
 }
 
 .ruleta__panel {
@@ -177,25 +195,34 @@
 }
 
 .ruleta__historial {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(clamp(4.8rem, 20cqw, 6.5rem), 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
   gap: clamp(0.15rem, 0.6dvh, 0.35rem);
   width: 100%;
+  min-height: 0;
   overflow: hidden;
 }
 
 .ruleta__historial nz-tag {
-  display: flex;
+  display: inline-flex;
+  flex: 1 1 0;
   align-items: center;
   justify-content: center;
+  gap: 0.2rem;
   height: auto;
-  min-width: 0;
+  min-width: clamp(6.8rem, 32cqw, 7.5rem);
+  max-width: clamp(6.8rem, 32cqw, 7.5rem);
+  min-height: min(1.5rem, 4dvh);
   margin: 0;
-  padding-inline: 0.25rem;
+  padding: clamp(0.05rem, 0.35dvh, 0.22rem) clamp(0.25rem, 1cqw, 0.42rem);
   overflow: hidden;
-  font-size: clamp(0.55rem, 1.8dvh, 0.72rem);
+  font-size: clamp(0.52rem, 1.8dvh, 0.68rem);
   line-height: 1.15;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  text-align: center;
+  white-space: normal;
 }
 
 @media (orientation: landscape) {
@@ -222,6 +249,11 @@
   }
 
   .ruleta__historial {
-    grid-template-columns: repeat(auto-fit, minmax(clamp(4.2rem, 18cqw, 5.5rem), 1fr));
+    gap: clamp(0.12rem, 0.5dvh, 0.25rem);
+  }
+
+  .ruleta__historial nz-tag {
+    min-width: clamp(5.8rem, 24cqw, 6.8rem);
+    max-width: clamp(5.8rem, 24cqw, 6.8rem);
   }
 }
