@@ -1,0 +1,49 @@
+<main class="app">
+  <header class="app__cabecera">
+    <div>
+      <h1 class="app__titulo">Ruleta de Gratitud</h1>
+      <p class="app__subtitulo">12 pasajes para dar gracias</p>
+    </div>
+    <div class="app__acciones">
+      <button nz-button nzType="text" title="Cambiar tema" (click)="cambiarTema()">
+        <nz-icon nzType="bg-colors" />
+        {{ etiquetaTema() }}
+      </button>
+      @if (instalable()) {
+        <button nz-button nzType="primary" (click)="instalar()">
+          <nz-icon nzType="download" />
+          Instalar
+        </button>
+      }
+    </div>
+  </header>
+
+  <app-ruleta #ruleta (completado)="alCompletar()"></app-ruleta>
+
+  @if (gratitudVisible()) {
+    <p class="gratitud">
+      <nz-icon nzType="heart" />
+      Gracias por compartir este día de gratitud.
+    </p>
+  }
+
+  @if (confetiVisible()) {
+    <app-confeti />
+  }
+
+  <nz-modal
+    [nzVisible]="modalVisible()"
+    [nzFooter]="null"
+    nzWidth="min(92vw, 420px)"
+    (nzOnCancel)="cerrarModal()"
+  >
+    <ng-container *nzModalContent>
+      <div class="modal">
+        <p class="modal__linea">¡Has completado los 12 pasajes!</p>
+        <p class="modal__linea">¡Feliz día de Acción de gracias!</p>
+        <button nz-button nzType="primary" (click)="cerrarModal()">Seguir</button>
+        <button nz-button (click)="reiniciar()">Jugar de nuevo</button>
+      </div>
+    </ng-container>
+  </nz-modal>
+</main>

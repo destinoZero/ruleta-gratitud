@@ -1,0 +1,159 @@
+.ruleta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.6rem, 1.6dvh, 1rem);
+  width: 100%;
+}
+
+.ruleta__marco {
+  position: relative;
+  width: min(94vw, 58dvh, 520px);
+  aspect-ratio: 1;
+}
+
+.ruleta__puntero {
+  position: absolute;
+  z-index: 2;
+  top: -3px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
+  border-top: 24px solid var(--primario);
+  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 25%));
+}
+
+.ruleta__disco {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  will-change: transform;
+  filter: drop-shadow(0 10px 18px var(--sombra));
+}
+
+.ruleta__disco:active {
+  cursor: grabbing;
+}
+
+.ruleta__disco--bloqueado {
+  cursor: default;
+}
+
+.ruleta__disco svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ruleta__segmento {
+  stroke: var(--borde-segmento);
+  stroke-width: 1.2;
+}
+
+.ruleta__segmento--usado {
+  stroke: var(--borde-usado);
+  stroke-dasharray: 6 5;
+}
+
+.ruleta__etiqueta {
+  fill: var(--texto-ruleta);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.ruleta__check {
+  fill: var(--check-fondo);
+}
+
+.ruleta__check-marca {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ruleta__centro {
+  fill: var(--centro);
+  stroke: var(--borde-centro);
+  stroke-width: 3;
+}
+
+.ruleta__centro-texto {
+  fill: var(--centro-texto);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.ruleta__progreso {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: min(94vw, 520px);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.ruleta__progreso nz-progress {
+  flex: 1;
+}
+
+.ruleta__controles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.ruleta__resultado {
+  width: min(94vw, 520px);
+}
+
+.resultado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.resultado__rotulo {
+  margin: 0 0 0.15rem;
+  color: var(--texto-suave);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.resultado__titulo {
+  margin: 0;
+  color: var(--texto);
+  font-size: clamp(1.15rem, 4.5vw, 1.5rem);
+}
+
+.ruleta__historial {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+  width: min(94vw, 520px);
+}
+
+@media (orientation: landscape) {
+  .ruleta__marco {
+    width: min(46vw, 78dvh, 360px);
+  }
+
+  .ruleta__progreso,
+  .ruleta__resultado,
+  .ruleta__historial {
+    width: min(70vw, 520px);
+  }
+}

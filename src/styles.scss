@@ -1,0 +1,90 @@
+:root,
+:root[data-theme='otoño'] {
+  color-scheme: light;
+  --fondo: #fff7ed;
+  --superficie: #ffedd5;
+  --texto: #431c07;
+  --texto-suave: #9a3412;
+  --primario: #c2410c;
+  --sombra: rgb(124 45 18 / 22%);
+  --borde-segmento: rgb(120 60 20 / 25%);
+  --borde-usado: #7c2d12;
+  --texto-ruleta: #3f2412;
+  --check-fondo: #7c2d12;
+  --centro: #fff7ed;
+  --borde-centro: #c2410c;
+  --centro-texto: #9a3412;
+  --confeti-1: #f97316;
+  --confeti-2: #facc15;
+  --confeti-3: #fb7185;
+  --confeti-4: #fdba74;
+}
+
+:root[data-theme='claro'] {
+  color-scheme: light;
+  --fondo: #f8fafc;
+  --superficie: #ffffff;
+  --texto: #1e293b;
+  --texto-suave: #64748b;
+  --primario: #2563eb;
+  --sombra: rgb(30 41 59 / 18%);
+  --borde-segmento: rgb(30 41 59 / 20%);
+  --borde-usado: #334155;
+  --texto-ruleta: #1e293b;
+  --check-fondo: #334155;
+  --centro: #ffffff;
+  --borde-centro: #2563eb;
+  --centro-texto: #1d4ed8;
+  --confeti-1: #3b82f6;
+  --confeti-2: #a78bfa;
+  --confeti-3: #34d399;
+  --confeti-4: #fbbf24;
+}
+
+:root[data-theme='oscuro'] {
+  color-scheme: dark;
+  --fondo: #171312;
+  --superficie: #2a2320;
+  --texto: #f7ede2;
+  --texto-suave: #d6bfa8;
+  --primario: #f59e0b;
+  --sombra: rgb(0 0 0 / 55%);
+  --borde-segmento: rgb(255 237 213 / 25%);
+  --borde-usado: #f59e0b;
+  --texto-ruleta: #2b1a0e;
+  --check-fondo: #7c2d12;
+  --centro: #2a2320;
+  --borde-centro: #f59e0b;
+  --centro-texto: #fcd34d;
+  --confeti-1: #fbbf24;
+  --confeti-2: #fb7185;
+  --confeti-3: #a78bfa;
+  --confeti-4: #34d399;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  touch-action: manipulation;
+}
+
+:root[data-theme='oscuro'] .ant-modal-content {
+  background: #241f1c;
+}
+
+:root[data-theme='oscuro'] .ant-modal-title,
+:root[data-theme='oscuro'] .ant-modal-body,
+:root[data-theme='oscuro'] .ant-modal-close {
+  color: var(--texto);
+}

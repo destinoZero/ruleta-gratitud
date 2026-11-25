@@ -1,0 +1,13 @@
+<div class="confeti" aria-hidden="true">
+  @for (pieza of piezas; track $index) {
+    <div
+      class="confeti__pieza"
+      [style.left.%]="pieza.izquierda"
+      [style.background]="pieza.color"
+      [style.animation-delay.ms]="pieza.retardo"
+      [style.animation-duration.ms]="pieza.duracion"
+    >
+      <span [style.transform]="'rotate(' + pieza.giro + 'deg)'"></span>
+    </div>
+  }
+</div>

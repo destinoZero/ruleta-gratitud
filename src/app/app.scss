@@ -1,0 +1,69 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.75rem, 2dvh, 1.25rem);
+  min-height: 100dvh;
+  padding: calc(env(safe-area-inset-top) + 1rem) 1rem calc(env(safe-area-inset-bottom) + 1rem);
+  background: var(--fondo);
+  color: var(--texto);
+  overscroll-behavior: none;
+}
+
+.app__cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: min(94vw, 520px);
+}
+
+.app__titulo {
+  margin: 0;
+  color: var(--texto);
+  font-size: clamp(1.35rem, 5.5vw, 1.9rem);
+  line-height: 1.15;
+}
+
+.app__subtitulo {
+  margin: 0.2rem 0 0;
+  color: var(--texto-suave);
+  font-size: clamp(0.8rem, 3.2vw, 0.95rem);
+}
+
+.app__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.gratitud {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: var(--superficie);
+  color: var(--texto);
+  font-weight: 600;
+  text-align: center;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0 0.25rem;
+  text-align: center;
+}
+
+.modal__linea {
+  margin: 0;
+  color: var(--texto);
+  font-size: clamp(1.05rem, 4vw, 1.25rem);
+  font-weight: 700;
+}
