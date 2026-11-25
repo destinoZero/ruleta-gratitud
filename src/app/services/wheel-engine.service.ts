@@ -194,8 +194,9 @@ export class WheelEngine {
       return;
     }
 
-    const libre = siguienteLibre(indice, usados, this.direccion);
-    const pasos = mod((libre - indice) * this.direccion, TOTAL_SEGMENTOS);
+    const direccionIndice: DireccionGiro = this.direccion === 1 ? -1 : 1;
+    const libre = siguienteLibre(indice, usados, direccionIndice);
+    const pasos = mod((libre - indice) * direccionIndice, TOTAL_SEGMENTOS);
     if (pasos === 0) {
       this.registrar(indice);
       return;

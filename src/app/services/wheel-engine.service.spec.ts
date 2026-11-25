@@ -3,6 +3,7 @@ import { RV60_ATRIBUCION, VERSICULOS } from '../data/versiculos';
 import { FeedbackService } from './feedback.service';
 import { PaletteService } from './palette.service';
 import {
+  ANGULO_SEGMENTO,
   FRICCION,
   VELOCIDAD_MAX,
   WheelEngine,
@@ -41,6 +42,44 @@ describe('WheelEngine', () => {
     expect(siguienteLibre(11, [0, 11])).toBe(1);
     expect(siguienteLibre(0, [0, 11, 10], -1)).toBe(9);
     expect(siguienteLibre(11, [0, 11], -1)).toBe(10);
+  });
+
+  it('salta en el sentido visual positivo y abre el sector mostrado', () => {
+    const engine = TestBed.inject(WheelEngine);
+    const interno = engine as unknown as {
+      rotacion: { set(valor: number): void };
+      dibujados: { set(valor: readonly number[]): void };
+      direccion: 1 | -1;
+      snap(): void;
+    };
+
+    interno.dibujados.set([5, 4, 3]);
+    interno.rotacion.set(-5 * ANGULO_SEGMENTO);
+    interno.direccion = 1;
+    interno.snap();
+    jest.advanceTimersByTime(6000);
+
+    expect(engine.resultado()).toBe(VERSICULOS[2]);
+    expect(indiceEn(engine.rotacion())).toBe(2);
+  });
+
+  it('salta en el sentido visual negativo y abre el sector mostrado', () => {
+    const engine = TestBed.inject(WheelEngine);
+    const interno = engine as unknown as {
+      rotacion: { set(valor: number): void };
+      dibujados: { set(valor: readonly number[]): void };
+      direccion: 1 | -1;
+      snap(): void;
+    };
+
+    interno.dibujados.set([5, 6, 7]);
+    interno.rotacion.set(-5 * ANGULO_SEGMENTO);
+    interno.direccion = -1;
+    interno.snap();
+    jest.advanceTimersByTime(6000);
+
+    expect(engine.resultado()).toBe(VERSICULOS[8]);
+    expect(indiceEn(engine.rotacion())).toBe(8);
   });
 
   it('gira hacia la derecha con el botón y respeta el sentido del arrastre', () => {
