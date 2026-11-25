@@ -11,101 +11,101 @@
   background: var(--fondo);
   color: var(--texto);
   overscroll-behavior: none;
-}
 
-.app__cabecera {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  width: 100%;
-  min-width: 0;
-}
-
-.app__titulo {
-  margin: 0;
-  color: var(--texto);
-  font-size: clamp(1.05rem, 4.8vw, 1.7rem);
-  line-height: 1.1;
-}
-
-.app__subtitulo {
-  margin: 0.1rem 0 0;
-  color: var(--texto-suave);
-  font-size: clamp(0.7rem, 2.6dvh, 0.9rem);
-  white-space: nowrap;
-}
-
-.app__acciones {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 0.35rem;
-}
-
-.app__tema {
-  border: 1px solid var(--primario) !important;
-  background: var(--superficie) !important;
-  background: color-mix(in srgb, var(--primario) 16%, var(--superficie)) !important;
-  color: var(--primario) !important;
-  font-weight: 700;
-}
-
-app-ruleta {
-  display: block;
-  height: 100%;
-  min-height: 0;
-}
-
-.gratitud {
-  position: fixed;
-  z-index: 20;
-  bottom: calc(env(safe-area-inset-bottom) + 0.75rem);
-  left: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  max-width: min(92vw, 520px);
-  margin: 0;
-  padding: 0.5rem 0.9rem;
-  border-radius: 999px;
-  background: var(--superficie);
-  color: var(--texto);
-  font-size: clamp(0.75rem, 2.5dvh, 0.95rem);
-  font-weight: 600;
-  text-align: center;
-  transform: translateX(-50%);
-}
-
-.modal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.5rem 0 0.25rem;
-  text-align: center;
-}
-
-.modal__linea {
-  margin: 0;
-  color: var(--texto);
-  font-size: clamp(1.05rem, 4vw, 1.25rem);
-  font-weight: 700;
-}
-
-@media (orientation: landscape) and (max-height: 520px) {
-  .app {
-    gap: 0.3rem;
-    padding-top: calc(env(safe-area-inset-top) + 0.35rem);
-    padding-bottom: calc(env(safe-area-inset-bottom) + 0.35rem);
+  &__cabecera {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+    min-width: 0;
   }
 
-  .app__titulo {
-    font-size: clamp(1rem, 3.8dvh, 1.35rem);
+  &__titulo {
+    margin: 0;
+    color: var(--texto);
+    font-size: clamp(1.05rem, 4.8vw, 1.7rem);
+    line-height: 1.1;
   }
 
-  .app__subtitulo {
-    font-size: clamp(0.65rem, 2.2dvh, 0.8rem);
+  &__subtitulo {
+    margin: 0.1rem 0 0;
+    color: var(--texto-suave);
+    font-size: clamp(0.7rem, 2.6dvh, 0.9rem);
+    white-space: nowrap;
+  }
+
+  &__acciones {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.35rem;
+  }
+
+  &__tema {
+    border: 1px solid var(--primario) !important;
+    background: var(--superficie) !important;
+    background: color-mix(in srgb, var(--primario) 16%, var(--superficie)) !important;
+    color: var(--primario) !important;
+    font-weight: 700;
+  }
+
+  @at-root app-ruleta {
+    display: block;
+    height: 100%;
+    min-height: 0;
+  }
+
+  @at-root .gratitud {
+    position: fixed;
+    z-index: 20;
+    bottom: calc(env(safe-area-inset-bottom) + 0.75rem);
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    max-width: min(92vw, 520px);
+    margin: 0;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    background: var(--superficie);
+    color: var(--texto);
+    font-size: clamp(0.75rem, 2.5dvh, 0.95rem);
+    font-weight: 600;
+    text-align: center;
+    transform: translateX(-50%);
+  }
+
+  @at-root .modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0 0.25rem;
+    text-align: center;
+
+    &__linea {
+      margin: 0;
+      color: var(--texto);
+      font-size: clamp(1.05rem, 4vw, 1.25rem);
+      font-weight: 700;
+    }
+  }
+
+  @media (orientation: landscape) and (max-height: 520px) {
+    & {
+      gap: 0.3rem;
+      padding-top: calc(env(safe-area-inset-top) + 0.35rem);
+      padding-bottom: calc(env(safe-area-inset-bottom) + 0.35rem);
+    }
+
+    &__titulo {
+      font-size: clamp(1rem, 3.8dvh, 1.35rem);
+    }
+
+    &__subtitulo {
+      font-size: clamp(0.65rem, 2.2dvh, 0.8rem);
+    }
   }
 }
