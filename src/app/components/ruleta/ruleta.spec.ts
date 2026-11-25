@@ -18,6 +18,9 @@ describe('Ruleta', () => {
     expect(fixture.nativeElement.querySelector('.ruleta__disco')).toBeTruthy();
     expect(fixture.nativeElement.querySelector('.ruleta__zona')).toBeTruthy();
     expect(fixture.nativeElement.querySelector('.ruleta__panel')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.ruleta__corazon')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.ruleta__centro-texto')).toBeNull();
+    expect(fixture.nativeElement.textContent).not.toContain('GR');
   });
 
   it('construye la ruta de un sector y parte su etiqueta', async () => {
