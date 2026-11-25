@@ -38,8 +38,16 @@ describe('App', () => {
     app.pasajeVisible.set(true);
     await fixture.whenStable();
 
-    expect(app.lineasPasaje()).toHaveLength(2);
-    expect(app.lineasPasaje()[0]).toContain('Por nada estéis afanosos');
+    const lineas = app.lineasPasaje();
+    expect(lineas).toEqual([
+      'Por nada estéis afanosos, sino sean conocidas vuestras peticiones delante de Dios en toda oración y ruego, con acción de gracias.',
+      'Y la paz de Dios, que sobrepasa todo entendimiento, guardará vuestros corazones y vuestros pensamientos en Cristo Jesús.',
+    ]);
+    expect(
+      lineas.every(
+        (linea) => !/^\d/.test(linea) && linea === linea.trim() && !/\s{2,}/.test(linea),
+      ),
+    ).toBe(true);
     expect(app.atribucionRv60).toContain('Reina-Valera 1960');
 
     app.cerrarPasaje();

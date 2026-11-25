@@ -51,7 +51,16 @@ export class App {
   readonly pasaje = signal<Versiculo | null>(null);
   readonly pasajeVisible = signal(false);
   readonly atribucionRv60 = RV60_ATRIBUCION;
-  readonly lineasPasaje = computed(() => this.pasaje()?.textoRv60.split('\n') ?? []);
+  readonly lineasPasaje = computed(() =>
+    (this.pasaje()?.textoRv60.split('\n') ?? [])
+      .map((linea) =>
+        linea
+          .replace(/^\s*\d+\s*/, '')
+          .replace(/\s+/g, ' ')
+          .trim(),
+      )
+      .filter(Boolean),
+  );
 
   private finalPendiente = false;
 
